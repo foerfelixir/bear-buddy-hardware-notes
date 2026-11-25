@@ -32,7 +32,7 @@ Source-backed firmware lives in the separate private [Bear-Buddy IR remote repos
 
 ## Credits
 
-Bear-Buddy is an awesome hardware kit designed by **TomatoCube**. Thanks to TomatoCube for the hardware design and detailed tutorial. The IR remote is part of the kit.
+Special thanks to **TomatoCube** for the Bear-Buddy kit, hardware design, and detailed tutorial and documentation. The IR remote is part of the kit.
 
 [Box 10 — Bear-Buddy DIY Desk Companion](https://github.com/TomatoCube18/Docs/tree/main/Box%2010%20-%20Bear-Buddy%20DIY%20Desk%20Companion)
 
