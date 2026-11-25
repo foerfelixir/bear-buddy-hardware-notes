@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Physically traced schematic and hardware notes for the Bear-Buddy CH32V003 three-button IR remote.">
+  <title>Bear-Buddy IR Remote Hardware Notes</title>
+  <style>
+    :root {
+      --bg: #f6f3ec;
+      --panel: #fffdf8;
+      --ink: #242722;
+      --muted: #62685e;
+      --line: #dcd8cd;
+      --accent: #9b4d24;
+      --accent-soft: #f2e2d4;
+      --warning: #fff0d5;
+      --sans: system-ui, -apple-system, "Segoe UI", sans-serif;
+      --mono: "Cascadia Mono", Consolas, monospace;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--sans); line-height: 1.65; }
+    a { color: var(--accent); text-underline-offset: 3px; }
+    a:hover { text-decoration-thickness: 2px; }
+    .wrap { width: min(1080px, calc(100% - 40px)); margin: 0 auto; }
+    .skip-link { position: absolute; left: -999px; top: 8px; padding: 8px 12px; background: var(--panel); }
+    .skip-link:focus { left: 8px; z-index: 10; }
+    header { padding: 34px 0; border-bottom: 1px solid var(--line); background: var(--panel); }
+    .header-inner, nav, .footer-inner { display: flex; align-items: center; justify-content: space-between; gap: 20px; }
+    .brand { color: var(--ink); font-size: 19px; font-weight: 750; text-decoration: none; }
+    .brand span { color: var(--accent); }
+    nav { flex-wrap: wrap; justify-content: flex-end; gap: 16px; font-size: 14px; }
+    nav a { color: var(--muted); text-decoration: none; font-weight: 650; }
+    nav a:hover { color: var(--accent); }
+    main { padding: 54px 0 70px; }
+    .eyebrow { margin: 0 0 12px; color: var(--accent); font: 700 12px var(--mono); letter-spacing: .12em; text-transform: uppercase; }
+    h1 { max-width: 820px; margin: 0 0 18px; font-size: clamp(36px, 6vw, 62px); line-height: 1.06; letter-spacing: -.04em; }
+    h2 { margin: 0 0 14px; font-size: 28px; line-height: 1.2; letter-spacing: -.02em; }
+    h3 { margin: 0 0 8px; font-size: 18px; }
+    p { margin: 0 0 16px; }
+    .lede { max-width: 780px; color: var(--muted); font-size: 19px; }
+    .badges, .actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 24px; }
+    .badge { padding: 5px 11px; border: 1px solid var(--line); border-radius: 999px; background: var(--panel); color: var(--muted); font: 600 12px var(--mono); }
+    .badge.traced { border-color: #d6b293; background: var(--accent-soft); color: var(--accent); }
+    .button { display: inline-block; padding: 11px 16px; border: 1px solid var(--line); border-radius: 9px; background: var(--panel); color: var(--ink); font-weight: 700; text-decoration: none; }
+    .button.primary { border-color: var(--accent); background: var(--accent); color: #fff; }
+    section { margin: 0 0 42px; scroll-margin-top: 24px; }
+    .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+    .grid > *, .card, pre { min-width: 0; }
+    .card { padding: 22px; border: 1px solid var(--line); border-radius: 14px; background: var(--panel); }
+    .meta { margin-bottom: 7px; color: var(--accent); font: 700 12px var(--mono); letter-spacing: .06em; text-transform: uppercase; }
+    .callout { padding: 18px 20px; border: 1px solid #dfc291; border-left: 4px solid #b87822; border-radius: 10px; background: var(--warning); }
+    .callout strong { display: block; margin-bottom: 5px; }
+    .table-wrap { max-width: 100%; overflow-x: auto; border: 1px solid var(--line); border-radius: 12px; background: var(--panel); }
+    table { width: 100%; border-collapse: collapse; font-size: 14px; }
+    th, td { padding: 11px 13px; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; }
+    th { background: #eeeae0; color: var(--muted); font-size: 12px; letter-spacing: .04em; text-transform: uppercase; }
+    tr:last-child td { border-bottom: 0; }
+    code { font-family: var(--mono); font-size: .92em; overflow-wrap: anywhere; }
+    pre { margin: 14px 0 0; padding: 15px; overflow-x: auto; border: 1px solid var(--line); border-radius: 10px; background: #eeeae0; }
+    pre code { overflow-wrap: normal; }
+    ul { margin: 8px 0 0; padding-left: 21px; }
+    li { margin: 6px 0; }
+    footer { padding: 26px 0; border-top: 1px solid var(--line); color: var(--muted); font-size: 13px; }
+    .footer-inner { flex-wrap: wrap; }
+    @media (max-width: 760px) {
+      .header-inner, nav, .footer-inner { align-items: flex-start; flex-direction: column; }
+      nav { justify-content: flex-start; }
+      .grid { grid-template-columns: 1fr; }
+      main { padding-top: 38px; }
+    }
+  </style>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<header>
+  <div class="wrap header-inner">
+    <a class="brand" href="index.html">Bear-Buddy <span>Hardware Notes</span></a>
+    <nav aria-label="Main navigation">
+      <a href="#provenance">Provenance</a>
+      <a href="#pins">Pin map</a>
+      <a href="#safety">Safety</a>
+      <a href="#downloads">Downloads</a>
+      <a href="#credits">Credits</a>
+    </nav>
+  </div>
+</header>
+<main id="main">
+  <section>
+    <div class="wrap">
+      <p class="eyebrow">CH32V003J4M6 · three buttons · 38 kHz</p>
+      <h1>Physically traced IR remote hardware notes</h1>
+      <p class="lede">Schematic evidence, pin assignments, and verification guidance for the three-button remote included with the TomatoCube-designed Box 10 Bear-Buddy DIY Desk Companion.</p>
+      <div class="badges">
+        <span class="badge traced">Reverse-engineered from the PCB</span>
+        <span class="badge">Not an official drawing</span>
+        <span class="badge">Verify against your board</span>
+      </div>
+      <div class="actions">
+        <a class="button primary" href="#downloads">Download schematic</a>
+        <a class="button" href="https://github.com/foerfelixir/bear-buddy-hardware-notes">Open repository</a>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap grid">
+      <article class="card"><div class="meta">Target</div><h3>CH32V003J4M6</h3><p>WCH RV32EC core. SW1, SW2, and SW3 are active-low inputs; PA2 / TIM1_CH2N drives the IR output.</p></article>
+      <article class="card"><div class="meta">Buttons</div><h3>SW1 &gt; SW2 &gt; SW3</h3><p>PC4, PC2, and PC1 with internal pull-ups. Confirm package numbering and continuity on the actual board.</p></article>
+      <article class="card"><div class="meta">Programming</div><h3>PD1 / SWIO</h3><p>Remove the battery before connecting a programmer. Use a WCH-LinkE in WCH-LinkRV / RISC-V mode.</p></article>
+    </div>
+  </section>
+
+  <section id="provenance">
+    <div class="wrap">
+      <p class="eyebrow">Evidence scope</p>
+      <h2>Traced, not supplied</h2>
+      <div class="callout">
+        <strong>This schematic was reverse-engineered by physically tracing the PCB lines.</strong>
+        <p>It is not a manufacturer-supplied or official TomatoCube schematic. It documents the nets needed to understand the MCU, buttons, IR output, programmer interface, reset, and power connections; it is not fabrication data.</p>
+      </div>
+      <p style="margin-top:16px">Component tolerances, exact markings, production substitutions, and kit revisions may differ. Check continuity, voltage, polarity, and every pin assignment on your own remote before powering, programming, or building hardware.</p>
+      <p><a href="https://github.com/foerfelixir/bear-buddy-hardware-notes/blob/main/docs/reverse-engineering.md">Read the reverse-engineering method and limitations</a></p>
+    </div>
+  </section>
+
+  <section id="pins">
+    <div class="wrap">
+      <p class="eyebrow">Firmware interface</p>
+      <h2>Pin map</h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>MCU pin</th><th>Package pin</th><th>Use</th><th>Notes</th></tr></thead>
+          <tbody>
+            <tr><td>VDD</td><td>1</td><td>Supply</td><td>Verify the regulated MCU rail first.</td></tr>
+            <tr><td>PC1</td><td>2</td><td>SW3</td><td>Active-low button input, internal pull-up.</td></tr>
+            <tr><td>PC2</td><td>3</td><td>SW2</td><td>Active-low button input, internal pull-up.</td></tr>
+            <tr><td>PC4</td><td>5</td><td>SW1</td><td>Active-low button input, internal pull-up.</td></tr>
+            <tr><td>PA2 / TIM1_CH2N</td><td>12</td><td>IR / indicator output</td><td>Active-low; hardware generates the 38 kHz carrier.</td></tr>
+            <tr><td>PD1 / SWIO</td><td>13</td><td>Programming/debug</td><td>WCH-LinkE in WCH-LinkRV / RISC-V mode.</td></tr>
+            <tr><td>PD3 / SWCLK</td><td>14</td><td>Programming clock</td><td>Connect with common ground.</td></tr>
+            <tr><td>NRST</td><td>7</td><td>Reset</td><td>Active low.</td></tr>
+            <tr><td>VSS</td><td>20</td><td>Ground</td><td>Common with programmer and supply.</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p><a href="https://github.com/foerfelixir/bear-buddy-hardware-notes/blob/main/docs/pin-map.md">Read the full firmware-relevant pin map</a></p>
+    </div>
+  </section>
+
+  <section id="safety">
+    <div class="wrap">
+      <p class="eyebrow">Before connecting hardware</p>
+      <h2>Power and programming safety</h2>
+      <div class="card">
+        <ul>
+          <li>Remove the remote battery before connecting a debugger or programmer.</li>
+          <li>Identify and verify the supply rails, polarity, and common ground.</li>
+          <li>Confirm the schematic nets against the specific board revision.</li>
+          <li>Flash source-backed <code>.bin</code> images at <code>0x08000000</code>.</li>
+          <li>Hold a remote button during configurable/Samsung Detect or Program operations to keep the six-second SWIO window open.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section id="downloads">
+    <div class="wrap">
+      <p class="eyebrow">Preserved evidence</p>
+      <h2>Schematic and checksum</h2>
+      <div class="grid">
+        <article class="card"><div class="meta">81,960 bytes · PDF</div><h3>Traced schematic</h3><p>Original physically traced schematic, preserved byte-for-byte.</p><p><a href="https://raw.githubusercontent.com/foerfelixir/bear-buddy-hardware-notes/main/hardware/IR_Remote_PCB_Traced_Schematic.pdf">Download PDF</a></p></article>
+        <article class="card"><div class="meta">SHA-256</div><h3>Integrity check</h3><pre><code>ccaeb465eab585a40274a1d206f8a9c4a2bba270ec970f4cf2d7012d7149bb2d</code></pre><p><a href="https://raw.githubusercontent.com/foerfelixir/bear-buddy-hardware-notes/main/hardware/SHA256SUMS">Download SHA256SUMS</a></p></article>
+      </div>
+    </div>
+  </section>
+
+  <section id="credits">
+    <div class="wrap">
+      <p class="eyebrow">Attribution</p>
+      <h2>Designed by TomatoCube</h2>
+      <p>Bear-Buddy is an awesome hardware kit designed by <strong>TomatoCube</strong>. The three-button IR remote is part of that kit. Thanks for the hardware design and detailed tutorial.</p>
+      <p><a href="https://github.com/TomatoCube18/Docs/tree/main/Box%2010%20-%20Bear-Buddy%20DIY%20Desk%20Companion">Box 10 — Bear-Buddy DIY Desk Companion</a> · <a href="https://github.com/TomatoCube18/DIY_Bear-Buddy_ControllerBoard">Controller-board reference</a></p>
+      <p>Related projects: <a href="https://foerfelixir.github.io/bear-buddy-ir-remote/">IR remote firmware</a> · <a href="https://foerfelixir.github.io/bear-buddy-webflasher/">ESP32-C3 web flasher</a></p>
+      <p class="meta">CC BY-SA 3.0 · no endorsement implied</p>
+    </div>
+  </section>
+</main>
+<footer>
+  <div class="wrap footer-inner"><span>Bear-Buddy IR Remote Hardware Notes</span><a href="https://github.com/foerfelixir/bear-buddy-hardware-notes/blob/main/LICENSE">License</a></div>
+</footer>
+</body>
+</html>

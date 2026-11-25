@@ -9,4 +9,4 @@ Thanks to **TomatoCube** for the hardware design and detailed tutorial:
 
 The schematic in this repository was reverse-engineered by physically tracing the PCB lines. It is not an official TomatoCube drawing.
 
-Firmware and software notes are maintained separately in the private [Bear-Buddy IR remote repository](https://github.com/foerfelixir/bear-buddy-ir-remote). ESP32-C3 programmer software is maintained in the private [Bear-Buddy web flasher repository](https://github.com/foerfelixir/bear-buddy-webflasher).
+Firmware and software notes are maintained separately in the [Bear-Buddy IR remote repository](https://github.com/foerfelixir/bear-buddy-ir-remote). ESP32-C3 programmer software is maintained in the [Bear-Buddy web flasher repository](https://github.com/foerfelixir/bear-buddy-webflasher).
