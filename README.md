@@ -1,6 +1,6 @@
 # Bear-Buddy IR Remote Hardware Notes
 
-Private hardware documentation for the three-button CH32V003J4M6 IR remote included with the **Box 10 — Bear-Buddy DIY Desk Companion** kit.
+Private hardware documentation for the three-button CH32V003J4M6 IR remote included with the **Box 10 — Bear-Buddy DIY Desk Companion**, an awesome hardware kit designed by **TomatoCube**.
 
 **Status:** private; not approved for public release.
 
@@ -22,7 +22,7 @@ ccaeb465eab585a40274a1d206f8a9c4a2bba270ec970f4cf2d7012d7149bb2d
 - [`hardware/SHA256SUMS`](hardware/SHA256SUMS) — artifact checksum.
 - [`docs/pin-map.md`](docs/pin-map.md) — MCU pin functions used by the firmware.
 - [`docs/reverse-engineering.md`](docs/reverse-engineering.md) — provenance, scope, and verification guidance.
-- [`docs/credits.md`](docs/credits.md) — Awesome Hardware, TomatoCube, and upstream references.
+- [`docs/credits.md`](docs/credits.md) — TomatoCube design credit and upstream references.
 
 ## MCU and firmware interface
 
@@ -32,10 +32,10 @@ Source-backed firmware lives in the separate private [Bear-Buddy IR remote repos
 
 ## Credits
 
-Special thanks to **Awesome Hardware** for the Bear-Buddy kit and to **TomatoCube** for the detailed Bear-Buddy tutorial and documentation. The IR remote is part of the kit.
+Bear-Buddy is an awesome hardware kit designed by **TomatoCube**. Thanks to TomatoCube for the hardware design and detailed tutorial. The IR remote is part of the kit.
 
 [Box 10 — Bear-Buddy DIY Desk Companion](https://github.com/TomatoCube18/Docs/tree/main/Box%2010%20-%20Bear-Buddy%20DIY%20Desk%20Companion)
 
 ## License
 
-Hardware documentation and the traced schematic are provided under **Creative Commons Attribution-ShareAlike 3.0 Unported**; see [`LICENSE`](LICENSE). This does not imply endorsement by Awesome Hardware, TomatoCube, or WCH.
+Hardware documentation and the traced schematic are provided under **Creative Commons Attribution-ShareAlike 3.0 Unported**; see [`LICENSE`](LICENSE). This does not imply endorsement by TomatoCube or WCH.

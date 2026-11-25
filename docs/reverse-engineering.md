@@ -2,7 +2,7 @@
 
 ## Provenance
 
-The included schematic was reconstructed by **physically tracing the PCB lines** on the actual three-button remote. No manufacturer schematic was used, and the PDF is not presented as an official drawing.
+The included schematic was reconstructed by **physically tracing the PCB lines** on the actual three-button remote. The Bear-Buddy hardware design is by **TomatoCube**; no manufacturer schematic was used, and the PDF is not presented as an official drawing.
 
 The user-supplied PDF is preserved byte-for-byte as [`hardware/IR_Remote_PCB_Traced_Schematic.pdf`](../hardware/IR_Remote_PCB_Traced_Schematic.pdf). Its SHA-256 is recorded in [`hardware/SHA256SUMS`](../hardware/SHA256SUMS).
 
