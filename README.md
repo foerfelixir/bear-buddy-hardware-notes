@@ -38,4 +38,4 @@ Special thanks to **TomatoCube** for the Bear-Buddy kit, as well as the detailed
 
 ## License
 
-Hardware documentation and the traced schematic are provided under **Creative Commons Attribution-ShareAlike 3.0 Unported**; see [`LICENSE`](LICENSE). This does not imply endorsement by Awesome Hardware, TomatoCube, or WCH.
+Hardware documentation and the traced schematic are provided under **Creative Commons Attribution-ShareAlike 3.0 Unported**; see [`LICENSE`](LICENSE). This does not imply endorsement by TomatoCube, or WCH.
